@@ -4,7 +4,7 @@ string? day;
 
 do
 {
-    Console.WriteLine("Enter the day for the solution you would like to run and press enter:");
+    Console.WriteLine("\nEnter the day for the solution you would like to run and press enter:");
     day = Console.ReadLine();
 
     var result = day switch
@@ -17,6 +17,8 @@ do
         "3b" => AocHelpers.RunDay(day, () => Day3.Part2()),
         "4a" => AocHelpers.RunDay(day, () => Day4.Part1()),
         "4b" => AocHelpers.RunDay(day, () => Day4.Part2()),
+        "5a" => AocHelpers.RunDay(day, () => Day5.Part1()),
+        "5b" => AocHelpers.RunDay(day, () => Day5.Part2()),
         _ => AocHelpers.RunDay(day, () => "Invalid day")
     };
 

@@ -57,7 +57,7 @@ namespace AOC
                             Console.WriteLine("Bingo!");
                             Console.WriteLine(string.Join(" ", board.Cast<int?>()));
                             // Calculate result
-                            var sum = board.Cast<int?>().Where(k => k.HasValue).Sum(k => k.Value);
+                            var sum = board.Cast<int?>().Sum(k => k ?? 0);
                             result = sum * currentNumber;
                             break;
                         }
@@ -132,7 +132,7 @@ namespace AOC
             }
             while (counter < input.Length && boards.Count > 0);
 
-            var sum = winners.Last().Cast<int?>().Where(k => k.HasValue).Sum(k => k.Value);
+            var sum = winners.Last().Cast<int?>().Sum(k => k ?? 0);
             result = sum * currentNumber;
 
             return result.ToString();

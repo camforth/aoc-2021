@@ -15,17 +15,7 @@ namespace AOC
             var lineCount = lines.Length;
             var bitLength = lines.First().Length;
 
-            var sums = new int[bitLength];
-
-            foreach(var line in lines)
-            {
-                var binaryArray = line.ToCharArray();
-
-                for(int x = 0; x < bitLength; x++)
-                {
-                    sums[x] += int.Parse(binaryArray[x].ToString());
-                }
-            }
+            var sums = GetSums(lines.ToList(), bitLength);
 
             string gamma = string.Empty;
             string epsilon = string.Empty;
