@@ -4,7 +4,11 @@ namespace AOC
 {
     public static class Day5
     {
-        public static string Part1()
+        public static string Part1() => GetIntersections(true).ToString();
+
+        public static string Part2() => GetIntersections(false).ToString();
+
+        public static int GetIntersections(bool horizontalOrVerticalOnly)
         {
             var lines = AocHelpers.ReadInputsAsString("input-day5.txt");
 
@@ -13,7 +17,7 @@ namespace AOC
             for (int i = 0; i < lines.Length; i++)
             {
                 var line = GetLine(lines[i]);
-                var newIntersections = AddLineToGrid(grid, line, true);
+                var newIntersections = AddLineToGrid(grid, line, horizontalOrVerticalOnly);
                 intersections += newIntersections;
             }
 
@@ -21,46 +25,38 @@ namespace AOC
 
             OutputGridToFile(grid);
 
-            var result = intersections;
-
-            return result.ToString();
-        }
-
-        public static string Part2()
-        {
-            var lines = AocHelpers.ReadInputsAsString("input-day5.txt");
-
-            var grid = new int[1000, 1000];
-            var intersections = 0;
-            for (int i = 0; i < lines.Length; i++)
-            {
-                var line = GetLine(lines[i]);
-                var newIntersections = AddLineToGrid(grid, line, false);
-                intersections += newIntersections;
-            }
-
-            Console.WriteLine($"Intersections: {intersections}");
-
-            OutputGridToFile(grid);
-
-            var result = intersections;
-
-            return result.ToString();
+            return intersections;
         }
 
         public static int AddLineToGrid(int[,] grid, Line line, bool horizontalOrVerticalOnly)
         {
             int newIntersections = 0;
 
-            var (p1, p2) = line;
+            var ((x1, y1), (x2, y2)) = line;
 
-            if (horizontalOrVerticalOnly && !(p1.X == p2.X || p1.Y == p2.Y ))
+            if (horizontalOrVerticalOnly && !(x1 == x2 || y1 == y2 ))
             {
                 return newIntersections;
             }
 
-            var (x1, y1) = p1;
-            var (x2, y2) = p2;
+            // My solution that only works for horizontal, vertical and 45 degree diagonals
+            var yStep = y1 == y2 ? 0 : (y1 < y2 ? 1 : -1);
+            var xStep = x1 == x2 ? 0 : (x1 < x2 ? 1 : -1);
+
+            for (; ; )
+            {
+                grid[x1, y1]++;
+                if (grid[x1, y1] == 2)
+                {
+                    newIntersections++;
+                }
+                if (x1 == x2 && y1 == y2)
+                {
+                    break;
+                }
+                x1 += xStep;
+                y1 += yStep;
+            }
 
             // Bresenham algorithm
             //int deltaX = Math.Abs(x2 - x1);
@@ -92,25 +88,6 @@ namespace AOC
             //        y1 += signY;
             //    }
             //}
-
-            // My solution that only works for horizontal, vertical and 45 degree diagonals
-            var yStep = y1 == y2 ? 0 : (y1 < y2 ? 1 : -1);
-            var xStep = x1 == x2 ? 0 : (x1 < x2 ? 1 : -1);
-
-            for (; ; )
-            {
-                grid[x1, y1]++;
-                if (grid[x1, y1] == 2)
-                {
-                    newIntersections++;
-                }
-                if (x1 == x2 && y1 == y2)
-                {
-                    break;
-                }
-                x1 += xStep;
-                y1 += yStep;
-            }
 
             return newIntersections;
         }
