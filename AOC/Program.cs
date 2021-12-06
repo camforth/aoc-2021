@@ -19,6 +19,10 @@ do
         "4b" => AocHelpers.RunDay(day, () => Day4.Part2()),
         "5a" => AocHelpers.RunDay(day, () => Day5.Part1()),
         "5b" => AocHelpers.RunDay(day, () => Day5.Part2()),
+        "6a" => AocHelpers.RunDay(day, () => Day6.Part1()),
+        "6b" => AocHelpers.RunDay(day, () => Day6.Part2()),
+        "7a" => AocHelpers.RunDay(day, () => Day7.Part1()),
+        "7b" => AocHelpers.RunDay(day, () => Day7.Part2()),
         _ => AocHelpers.RunDay(day, () => "Invalid day")
     };
 
