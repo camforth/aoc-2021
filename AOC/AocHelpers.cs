@@ -19,7 +19,7 @@ namespace AOC
         public static string RunDay(string? day, Func<string> action)
         {
             Console.WriteLine($"Running day {day} solution");
-            var sw = new Stopwatch();
+            var sw = Stopwatch.StartNew();
             sw.Start();
             var result = action();
             sw.Stop();

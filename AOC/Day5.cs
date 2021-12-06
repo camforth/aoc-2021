@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Drawing;
+using System.Text;
 
 namespace AOC
 {
@@ -24,6 +25,7 @@ namespace AOC
             Console.WriteLine($"Intersections: {intersections}");
 
             OutputGridToFile(grid);
+            OutputGridToBitmap(grid);
 
             return intersections;
         }
@@ -117,21 +119,25 @@ namespace AOC
             File.WriteAllText(path, str.ToString());
         }
 
-        //public static void OutputGridToBitmap(int[,] grid)
-        //{
-        //    var bitmap = new Bitmap(1000, 1000);
-        //    for (int i = 0; i < 1000; i++)
-        //    {
-        //        for (int j = 0; j < 1000; j++)
-        //        {
-        //            var color = grid[i, j] > 0 ? Color.Black : Color.White;
-        //            bitmap.SetPixel(i, j, color);
-        //        }
-        //    }
+        public static void OutputGridToBitmap(int[,] grid)
+        {
+            if (!OperatingSystem.IsWindows())
+            {
+                return;
+            }
+            var bitmap = new Bitmap(1000, 1000);
+            for (int i = 0; i < 1000; i++)
+            {
+                for (int j = 0; j < 1000; j++)
+                {
+                    var color = grid[i, j] > 0 ? grid[i, j] > 1 ? Color.Red : Color.Black : Color.White;
+                    bitmap.SetPixel(i, j, color);
+                }
+            }
 
-        //    var path = Path.Combine(Directory.GetCurrentDirectory(), "output-day5.bmp");
-        //    bitmap.Save(path);
-        //}
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "output-day5.bmp");
+            bitmap.Save(path);
+        }
     }
 
     public record struct Point(int X, int Y);
