@@ -1,4 +1,6 @@
-﻿namespace AOC
+﻿using System.Diagnostics;
+
+namespace AOC
 {
     public static class AocHelpers
     {
@@ -17,7 +19,12 @@
         public static string RunDay(string? day, Func<string> action)
         {
             Console.WriteLine($"Running day {day} solution");
-            return action();
+            var sw = new Stopwatch();
+            sw.Start();
+            var result = action();
+            sw.Stop();
+            Console.WriteLine($"Soluton took {sw.ElapsedMilliseconds}ms to run");
+            return result;
         }
     }
 }
