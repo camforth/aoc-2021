@@ -1,6 +1,6 @@
 ﻿using AOC;
 
-if (!string.IsNullOrEmpty(args[0])) RunDay(args[0]);
+if (args.Any() && !string.IsNullOrEmpty(args[0])) RunDay(args[0]);
 
 string? day;
 do
