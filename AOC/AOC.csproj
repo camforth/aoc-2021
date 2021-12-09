@@ -8,25 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="System.Drawing.Common" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="input-day3.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="input-day2.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="input-day1.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="input-day3 %28copy%29.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="input-day4 %28copy%29.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="input-day8.txt">
+    <None Update="input-day*.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
