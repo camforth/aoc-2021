@@ -16,7 +16,7 @@
         {
             var lines = AocHelpers.ReadInputsAsString("input-day9.txt");
 
-            var grid = CreateGrid(lines);
+            var grid = AocHelpers.CreateGrid(lines);
 
             var lowPoints = GetLowPoints(grid);
 
@@ -34,7 +34,7 @@
         {
             var lines = AocHelpers.ReadInputsAsString("input-day9.txt");
 
-            var grid = CreateGrid(lines);
+            var grid = AocHelpers.CreateGrid(lines);
 
             var lowPoints = GetLowPoints(grid);
 
@@ -57,20 +57,6 @@
             return result;
         }
 
-        private static int[,] CreateGrid(string[] lines)
-        {
-            var grid = new int[lines.Length, lines[0].Length];
-
-            for (int i = 0; i < lines.Length; i++)
-            {
-                for (int j = 0; j < lines[0].Length; j++)
-                {
-                    grid[i, j] = int.Parse(lines[i][j].ToString());
-                }
-            }
-            return grid;
-        }
-
         private static List<Point> GetLowPoints(int[,] grid)
         {
             var lowPoints = new List<Point>();
@@ -83,25 +69,25 @@
                     var surroundingNumbers = new List<int>();
 
                     // left
-                    if (!IsOutOfBound(x - 1, y, grid))
+                    if (!AocHelpers.IsOutOfBounds(grid, x - 1, y))
                     {
                         surroundingNumbers.Add(grid[x - 1,y]);
                     }
 
                     // up
-                    if (!IsOutOfBound(x, y + 1, grid))
+                    if (!AocHelpers.IsOutOfBounds(grid, x, y + 1))
                     {
                         surroundingNumbers.Add(grid[x, y + 1]);
                     }
 
                     // right
-                    if (!IsOutOfBound(x + 1, y, grid))
+                    if (!AocHelpers.IsOutOfBounds(grid, x + 1, y))
                     {
                         surroundingNumbers.Add(grid[x + 1, y]);
                     }
 
                     // down
-                    if (!IsOutOfBound(x, y - 1, grid))
+                    if (!AocHelpers.IsOutOfBounds(grid, x, y - 1))
                     {
                         surroundingNumbers.Add(grid[x, y - 1]);
                     }
@@ -118,7 +104,7 @@
         private static int GetNeighbours(int[,] grid, Point p0, List<Point> previous)
         {
             if (previous.Contains(p0)
-                || IsOutOfBound(p0.X, p0.Y, grid)
+                || AocHelpers.IsOutOfBounds(grid, p0)
                 || grid[p0.X, p0.Y] > 8)
             {
                 return 0;
@@ -135,19 +121,6 @@
             count += GetNeighbours(grid, new Point(x + 1, y), previous);
             count += GetNeighbours(grid, new Point(x, y - 1), previous);
             return count;
-        }
-
-        private static bool IsOutOfBound(int x, int y, int[,] grid)
-        {
-            try
-            {
-                _ = grid[x, y];
-                return false;
-            }
-            catch
-            {
-                return true;
-            }
         }
     }
 }

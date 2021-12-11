@@ -139,7 +139,4 @@ namespace AOC
             bitmap.Save(path);
         }
     }
-
-    public record struct Point(int X, int Y);
-    public record struct Line(Point A, Point B);
 }
