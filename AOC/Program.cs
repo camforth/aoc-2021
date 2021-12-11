@@ -34,6 +34,8 @@ static void RunDay(string? day)
         "9b" => AocHelpers.RunDay(day, () => Day9.Part2()),
         "10a" => AocHelpers.RunDay(day, () => Day10.Part1()),
         "10b" => AocHelpers.RunDay(day, () => Day10.Part2()),
+        "11a" => AocHelpers.RunDay(day, () => Day11.Part1()),
+        "11b" => AocHelpers.RunDay(day, () => Day11.Part2()),
         _ => AocHelpers.RunDay(day, () => "Invalid day")
     };
 
