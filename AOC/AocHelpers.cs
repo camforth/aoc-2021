@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Runtime.ExceptionServices;
 
 namespace AOC
 {
@@ -45,17 +46,29 @@ namespace AOC
             if (type is null) return () => "Invalid day";
             var partStr = part == "a" ? "1" : "2";
             var methodInfo = type.GetMethod($"Part{partStr}");
-            return () => methodInfo?.Invoke(null, null)?.ToString() ?? "There was an error";
+            return () =>
+            {
+                try
+                {
+                    return methodInfo?.Invoke(null, null)?.ToString() ?? "There was an error";
+                }
+                catch (Exception ex)
+                {
+                    // unwrap exception and keep stack trace intact
+                    ExceptionDispatchInfo.Capture(ex.InnerException ?? ex).Throw();
+                    return "There was an error";
+                }
+            };
         }
 
-        public static void WriteGridToConsole(int[,] grid)
+        public static void WriteGridToConsole(int[,] grid, Func<int, string>? customOutput = null)
         {
             foreach (var x in Enumerable.Range(0, grid.GetLength(0)))
             {
                 string line = "";
                 foreach (var y in Enumerable.Range(0, grid.GetLength(1)))
                 {
-                    line += grid[x, y];
+                    line += customOutput is null ? grid[x, y] : customOutput(grid[x,y]);
                 }
                 Console.WriteLine(line);
             }
