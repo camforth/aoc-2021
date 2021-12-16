@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.ExceptionServices;
 
 namespace AOC
@@ -73,6 +74,25 @@ namespace AOC
                 Console.WriteLine(line);
             }
             Console.WriteLine();
+        }
+
+        public static void OutputGridToBitmap(int[,] grid, string filename, Func<int, int, Color> colorFunc)
+        {
+            if (!OperatingSystem.IsWindows())
+            {
+                return;
+            }
+            var bitmap = new Bitmap(grid.GetLength(0), grid.GetLength(1));
+            foreach (var x in Enumerable.Range(0, grid.GetLength(0)))
+            {
+                foreach (var y in Enumerable.Range(0, grid.GetLength(1)))
+                {
+                    bitmap.SetPixel(x, y, colorFunc(x, y));
+                }
+            }
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), filename);
+            bitmap.Save(path);
         }
 
         public static int[,] CreateGrid(string[] lines)

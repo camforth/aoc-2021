@@ -1,23 +1,15 @@
-﻿namespace AOC;
+﻿using System.Drawing;
+
+namespace AOC;
 
 public static class Day15
 {
-    public static string Part1()
-    {
-        return GetSolution(false).ToString();
-    }
-
-    public static string Part2()
-    {
-        return GetSolution(true).ToString();
-    }
+    public static string Part1() => GetSolution(false).ToString();
+    public static string Part2() => GetSolution(true).ToString();
 
     private static int GetSolution(bool part2)
     {
         var grid = GetGrid(part2);
-
-        //AocHelpers.WriteGridToConsole(grid);
-
         var (risk, previous) = GetPathWithPriorityQueue(grid, new(0, 0));
 
         var path = new Stack<Point>();
@@ -28,9 +20,8 @@ public static class Day15
             previous.TryGetValue(target.Value, out target);
         }
 
-        var result = path.Sum(x => grid[x.X, x.Y]);
-
-        return result;
+        //Output(grid, risk, path);
+        return path.Sum(x => grid[x.X, x.Y]);
     }
 
     // Dijkstra's algorithm
@@ -41,7 +32,6 @@ public static class Day15
         var queue = new PriorityQueue<Point, int>();
 
         risk[start] = 0;
-
         foreach (var x in Enumerable.Range(0, grid.GetLength(0)))
         {
             foreach (var y in Enumerable.Range(0, grid.GetLength(1)))
@@ -148,6 +138,16 @@ public static class Day15
             points.Add(down);
         }
         return points;
+    }
+
+    private static void Output(int[,] grid, Dictionary<Point, int> risk, Stack<Point> path)
+    {
+        AocHelpers.WriteGridToConsole(grid);
+        AocHelpers.OutputGridToBitmap(grid, "output-day15.bmp", (x, y) =>
+        {
+            var point = new Point(x, y);
+            return path.Contains(point) ? Color.Red : Color.FromArgb(Math.Min(255, risk[point] / 10), Color.Black);
+        });
     }
 }
 
