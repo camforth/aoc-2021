@@ -19,7 +19,7 @@ public static class Day18
         var pairs = new PairSnailfish[lines.Length];
         foreach(var i in Enumerable.Range(0, lines.Length))
         {
-            pairs[i] = ParseAndReduceLine(lines[i])!;
+            pairs[i] = ParseAndReduceLine(lines[i]);
         }
 
         PairSnailfish currentPair = pairs[0];
@@ -28,7 +28,7 @@ public static class Day18
             //Console.WriteLine($"Current pair: {currentPair}");
             var addedPair = new PairSnailfish(currentPair, pairs[i]);
             //Console.WriteLine($"Added pair: {addedPair}");
-            currentPair = ParseAndReduceLine(addedPair.ToString())!;
+            currentPair = ParseAndReduceLine(addedPair.ToString());
         }
 
         var sums = new List<int>();
@@ -54,9 +54,9 @@ public static class Day18
         return result;
     }
 
-    private static PairSnailfish? ParseAndReduceLine(string line)
+    private static PairSnailfish ParseAndReduceLine(string line)
     {
-        PairSnailfish? pair = null;
+        PairSnailfish pair = null!;
         var reducing = true;
         while (reducing)
         {
@@ -75,10 +75,10 @@ public static class Day18
     {
         var position = 1;
         var tokens = line.ToCharArray();
-        return ParseExpressions(tokens, ref position);
+        return ParseExpression(tokens, ref position);
     }
 
-    private static PairSnailfish ParseExpressions(char[] tokens, ref int position)
+    private static PairSnailfish ParseExpression(char[] tokens, ref int position)
     {
         var left = ParsePair(tokens, ref position);
         position++;
@@ -96,6 +96,7 @@ public static class Day18
         position++;
         if (token != '[' && int.TryParse(token.ToString(), out int value))
         {
+            // check for 2 char numbers. 3 char doesn't seem to happen
             if (int.TryParse($"{token}{tokens[position]}", out int value2))
             {
                 position++;
@@ -105,7 +106,7 @@ public static class Day18
         }
         else
         {
-            return ParseExpressions(tokens, ref position);
+            return ParseExpression(tokens, ref position);
         }
     }
 
@@ -122,21 +123,18 @@ public static class Day18
     {
         if (snailfish.Left is PairSnailfish lPair)
         {
-            var reduced = MaybeExplodeSnailfish(lPair);
-            if (reduced) return true;
+            if (MaybeExplodeSnailfish(lPair)) return true;
         }
         if (snailfish.Right is PairSnailfish rPair)
         {
-            var reduced = MaybeExplodeSnailfish(rPair);
-            if (reduced) return true;
+            if (MaybeExplodeSnailfish(rPair)) return true;
         }
         if (snailfish.Left is RegularSnailfish left
             && snailfish.Right is RegularSnailfish right)
         {
-            
             var parentCount = 0;
             snailfish.ParentCount(ref parentCount);
-            if (parentCount >= 5)
+            if (parentCount > 4)
             {
                 // explode
                 var foundLeft = new List<Snailfish>();
@@ -152,7 +150,7 @@ public static class Day18
                 {
                     greaterThanPosition.Value += right.Value;
                 }
-
+                // replace parent left or right node
                 if (snailfish.Parent!.Left == snailfish)
                 {
                     snailfish.Parent.Left = new RegularSnailfish(0, 0);
@@ -172,8 +170,7 @@ public static class Day18
     {
         if (snailfish.Left is PairSnailfish lPair)
         {
-            var reduced = MaybeSplitSnailfish(lPair);
-            if (reduced) return true;
+            if (MaybeSplitSnailfish(lPair)) return true;
         }
         if (snailfish.Left is RegularSnailfish l
             && l.Value >= 10)
@@ -189,8 +186,7 @@ public static class Day18
         }
         if (snailfish.Right is PairSnailfish rPair)
         {
-            var reduced = MaybeSplitSnailfish(rPair);
-            if (reduced) return true;
+            if (MaybeSplitSnailfish(rPair)) return true;
         }
         return false;
     }
@@ -207,12 +203,7 @@ public static class Day18
 
     private abstract class Snailfish
     {
-        public SnailfishType Type { get; init; }
         public PairSnailfish? Parent { get; set; }
-        public Snailfish(SnailfishType type)
-        {
-            Type = type;
-        }
         public void ParentCount(ref int count)
         {
             count++;
@@ -272,7 +263,6 @@ public static class Day18
     private class PairSnailfish : Snailfish
     {
         public PairSnailfish(Snailfish left, Snailfish right)
-            : base(SnailfishType.Pair)
         {
             Left = left;
             Right = right;
@@ -288,7 +278,6 @@ public static class Day18
     private class RegularSnailfish : Snailfish
     {
         public RegularSnailfish(int value, int position)
-            : base(SnailfishType.Pair)
         {
             Value = value;
             Position = position;
@@ -299,10 +288,5 @@ public static class Day18
         {
             return Value.ToString();
         }
-    }
-    private enum SnailfishType
-    {
-        Regular,
-        Pair
     }
 }
