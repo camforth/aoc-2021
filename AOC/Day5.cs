@@ -25,7 +25,7 @@ namespace AOC
             Console.WriteLine($"Intersections: {intersections}");
 
             OutputGridToFile(grid);
-            AocHelpers.OutputGridToBitmap(grid, "output-day5.bmp", (x, y) => grid[x, y] > 0 ? grid[x, y] > 1 ? Color.Red : Color.Black : Color.White);
+            AocHelpers.OutputGridToBitmap(grid, "output-day5.bmp", (x, y, _) => grid[x, y] > 0 ? grid[x, y] > 1 ? Color.Red : Color.Black : Color.White);
 
             return intersections;
         }

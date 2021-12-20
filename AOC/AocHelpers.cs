@@ -62,7 +62,7 @@ namespace AOC
             };
         }
 
-        public static void WriteGridToConsole(int[,] grid, Func<int, string>? customOutput = null)
+        public static void WriteGridToConsole<T>(T[,] grid, Func<T, string>? customOutput = null)
         {
             foreach (var x in Enumerable.Range(0, grid.GetLength(0)))
             {
@@ -76,7 +76,7 @@ namespace AOC
             Console.WriteLine();
         }
 
-        public static void OutputGridToBitmap(int[,] grid, string filename, Func<int, int, Color> colorFunc)
+        public static void OutputGridToBitmap<T>(T[,] grid, string filename, Func<int, int, T, Color> colorFunc)
         {
             if (!OperatingSystem.IsWindows())
             {
@@ -87,7 +87,7 @@ namespace AOC
             {
                 foreach (var y in Enumerable.Range(0, grid.GetLength(1)))
                 {
-                    bitmap.SetPixel(x, y, colorFunc(x, y));
+                    bitmap.SetPixel(x, y, colorFunc(x, y, grid[x,y]));
                 }
             }
 
@@ -104,6 +104,20 @@ namespace AOC
                 for (int j = 0; j < lines[0].Length; j++)
                 {
                     grid[i, j] = int.Parse(lines[i][j].ToString());
+                }
+            }
+            return grid;
+        }
+
+        public static string[,] CreateStringGrid(string[] lines)
+        {
+            var grid = new string[lines.Length, lines[0].Length];
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                for (int j = 0; j < lines[0].Length; j++)
+                {
+                    grid[i, j] = lines[i][j].ToString();
                 }
             }
             return grid;

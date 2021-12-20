@@ -143,7 +143,7 @@ public static class Day15
     private static void Output(int[,] grid, Dictionary<Point, int> risk, Stack<Point> path)
     {
         AocHelpers.WriteGridToConsole(grid);
-        AocHelpers.OutputGridToBitmap(grid, "output-day15.bmp", (x, y) =>
+        AocHelpers.OutputGridToBitmap(grid, "output-day15.bmp", (x, y, _) =>
         {
             var point = new Point(x, y);
             return path.Contains(point) ? Color.Red : Color.FromArgb(Math.Min(255, risk[point] / 10), Color.Black);
