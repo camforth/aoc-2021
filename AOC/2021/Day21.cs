@@ -1,6 +1,6 @@
-﻿namespace AOC;
+﻿namespace AOC._2021;
 
-public static class Day19
+public static class Day21
 {
     public static string Part1()
     {
@@ -14,7 +14,7 @@ public static class Day19
 
     private static int GetSolution()
     {
-        var lines = AocHelpers.ReadInputsAsString("input-day19.txt");
+        var lines = AocHelpers.ReadInputsAsString("input-day21.txt");
 
         var result = 0;
 

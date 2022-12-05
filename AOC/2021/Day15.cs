@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace AOC;
+namespace AOC._2021;
 
 public static class Day15
 {

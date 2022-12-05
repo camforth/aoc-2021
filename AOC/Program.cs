@@ -13,7 +13,7 @@ do
 
 static void RunDay(string? day)
 {
-    var dayFunc = AocHelpers.GetDayRunFunc(day);
+    var dayFunc = AocHelpers.GetDayRunFunc(day, "2022");
     var result = AocHelpers.RunDay(day, dayFunc);
     Console.WriteLine($"Result: {result}");
 }
