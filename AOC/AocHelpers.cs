@@ -69,11 +69,22 @@ public static class AocHelpers
             string line = "";
             foreach (var y in Enumerable.Range(0, grid.GetLength(1)))
             {
-                line += customOutput is null ? grid[x, y] : customOutput(grid[x,y]);
+                line += customOutput is null ? grid[y, x] : customOutput(grid[y,x]);
             }
             Console.WriteLine(line);
         }
         Console.WriteLine();
+    }
+    
+    public static void WritePointsToConsole(List<Point> points, int size)
+    {
+        var half = size / 2;
+        var grid = new string[size, size];
+        foreach (var point in points)
+        {
+            grid[point.X + half, point.Y + half] = "#";
+        }
+        WriteGridToConsole(grid, (x) => x is null ? "." : x);
     }
 
     public static void OutputGridToBitmap<T>(T[,] grid, string filename, Func<int, int, T, Color> colorFunc)

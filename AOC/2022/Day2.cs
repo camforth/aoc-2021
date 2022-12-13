@@ -21,6 +21,7 @@ public static class Day2
                 ["C" or "Z", "A" or "X"] => 1 + 6, // win
                 ["C" or "Z", "B" or "Y"] => 2 + 0, // loss
                 ["C" or "Z", "C" or "Z"] => 3 + 3, // draw
+                _ => throw new Exception("uh oh")
             };
             
             Console.WriteLine($"Score: {score}");
@@ -56,6 +57,7 @@ public static class Day2
                 ["C", "X"] => 2 + 0, // loss paper
                 ["C", "Y"] => 3 + 3, // draw scissors
                 ["C", "Z"] => 1 + 6, // win rock
+                _ => throw new Exception("uh oh")
             };
             
             Console.WriteLine($"Score: {score}");
