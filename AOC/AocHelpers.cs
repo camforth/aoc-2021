@@ -152,4 +152,6 @@ public static class AocHelpers
 }
 
 public record struct Point(int X, int Y);
+
+public record struct Point3D(int X, int Y, int Z);
 public record struct Line(Point A, Point B);

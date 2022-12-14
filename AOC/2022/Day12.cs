@@ -75,15 +75,13 @@ public static class Day12
 
         distance[start] = 0;
         foreach (var x in Enumerable.Range(0, grid.GetLength(0)))
+        foreach (var y in Enumerable.Range(0, grid.GetLength(1)))
         {
-            foreach (var y in Enumerable.Range(0, grid.GetLength(1)))
+            var point = new Point(x, y);
+            if (point != start)
             {
-                var point = new Point(x, y);
-                if (point != start)
-                {
-                    distance[point] = int.MaxValue;
-                    previous[point] = null;
-                }
+                distance[point] = int.MaxValue;
+                previous[point] = null;
             }
         }
         
